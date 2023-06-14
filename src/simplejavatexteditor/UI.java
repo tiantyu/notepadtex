@@ -147,7 +147,6 @@ public class UI extends JFrame implements ActionListener {
             @Override
             public void keyPressed(KeyEvent ke) {
                 edit = true;
-                languageHighlighter.highLight(textArea, kw.getCppKeywords());
                 languageHighlighter.highLight(textArea, kw.getJavaKeywords());
             }
         });
@@ -446,22 +445,12 @@ public class UI extends JFrame implements ActionListener {
 
         for (int i = 0; i < list.length; i++) {
             if (file.getName().endsWith(list[i])) {
-                switch (i) {
-                    case 0 -> {
+
                         String[] jk = kw.getJavaKeywords();
                         arrayList = kw.setKeywords(jk);
                         autocomplete = new AutoComplete(this, arrayList);
                         textArea.getDocument().addDocumentListener(autocomplete);
                         hasListener = true;
-                    }
-                    case 1 -> {
-                        String[] ck = kw.getCppKeywords();
-                        arrayList = kw.setKeywords(ck);
-                        autocomplete = new AutoComplete(this, arrayList);
-                        textArea.getDocument().addDocumentListener(autocomplete);
-                        hasListener = true;
-                    }
-                }
             }
         }
     }
