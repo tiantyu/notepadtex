@@ -65,9 +65,8 @@ public class UI extends JFrame implements ActionListener {
     private final JMenuBar menuBar;
     private final JComboBox<String> fontType;
     private final JComboBox<Integer> fontSize;
-    private final JMenu menuFile, menuEdit, menuFind, menuAbout;
-    private final JMenuItem newFile, openFile, saveFile, close, cut, copy, paste, clearFile, selectAll, quickFind,
-            aboutMe, aboutSoftware, wordWrap;
+    private final JMenu menuFile, menuEdit, menuFind;
+    private final JMenuItem newFile, openFile, saveFile, close, cut, copy, paste, clearFile, selectAll, quickFind;
     private final JToolBar mainToolbar;
     JButton newButton, openButton, saveButton, clearButton, quickButton, aboutMeButton, aboutButton, closeButton, boldButton, italicButton;
     private final Action selectAllAction;
@@ -99,7 +98,6 @@ public class UI extends JFrame implements ActionListener {
 
     private SupportedKeywords kw = new SupportedKeywords();
     private HighlightText languageHighlighter = new HighlightText(Color.GRAY);
-    AutoComplete autocomplete;
     private boolean hasListener = false;
     private boolean edit = false;
 
@@ -163,7 +161,6 @@ public class UI extends JFrame implements ActionListener {
         menuFile = new JMenu("File");
         menuEdit = new JMenu("Edit");
         menuFind = new JMenu("Search");
-        menuAbout = new JMenu("About");
         //Font Settings menu
 
         // Set the Items Menu
@@ -173,15 +170,11 @@ public class UI extends JFrame implements ActionListener {
         close = new JMenuItem("Quit", closeIcon);
         clearFile = new JMenuItem("Clear", clearIcon);
         quickFind = new JMenuItem("Quick", searchIcon);
-        aboutMe = new JMenuItem("About Me", aboutMeIcon);
-        aboutSoftware = new JMenuItem("About Software", aboutIcon);
 
         menuBar = new JMenuBar();
         menuBar.add(menuFile);
         menuBar.add(menuEdit);
         menuBar.add(menuFind);
-
-        menuBar.add(menuAbout);
 
         this.setJMenuBar(menuBar);
 
@@ -239,28 +232,9 @@ public class UI extends JFrame implements ActionListener {
         cut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
         menuEdit.add(cut);
 
-        // WordWrap
-        wordWrap = new JMenuItem();
-        wordWrap.setText("Word Wrap");
-        wordWrap.setIcon(wordwrapIcon);
-        wordWrap.setToolTipText("Word Wrap");
-
-        //Short cut key or key stroke
-        wordWrap.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_MASK));
-        menuEdit.add(wordWrap);
-
         /* CODE FOR WORD WRAP OPERATION
          * BY DEFAULT WORD WRAPPING IS ENABLED.
          */
-        wordWrap.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
-                // If wrapping is false then after clicking on menuitem the word wrapping will be enabled
-                /* Setting word wrapping to true */
-                // else  if wrapping is true then after clicking on menuitem the word wrapping will be disabled
-                /* Setting word wrapping to false */
-                textArea.setLineWrap(!textArea.getLineWrap());
-            }
-        });
 
         // Copy Text
         copy = new JMenuItem(new DefaultEditorKit.CopyAction());
@@ -282,16 +256,6 @@ public class UI extends JFrame implements ActionListener {
         quickFind.addActionListener(this);
         quickFind.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_MASK));
         menuFind.add(quickFind);
-
-        // About Me
-        aboutMe.addActionListener(this);
-        aboutMe.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
-        menuAbout.add(aboutMe);
-
-        // About Software
-        aboutSoftware.addActionListener(this);
-        aboutSoftware.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
-        menuAbout.add(aboutSoftware);
 
         mainToolbar = new JToolBar();
         this.add(mainToolbar, BorderLayout.NORTH);
@@ -433,27 +397,6 @@ public class UI extends JFrame implements ActionListener {
         return textArea;
     }
 
-    // Enable autocomplete option
-    public void enableAutoComplete(File file) {
-        if (hasListener) {
-            textArea.getDocument().removeDocumentListener(autocomplete);
-            hasListener = false;
-        }
-
-        ArrayList<String> arrayList;
-        String[] list = kw.getSupportedLanguages();
-
-        for (int i = 0; i < list.length; i++) {
-            if (file.getName().endsWith(list[i])) {
-
-                        String[] jk = kw.getJavaKeywords();
-                        arrayList = kw.setKeywords(jk);
-                        autocomplete = new AutoComplete(this, arrayList);
-                        textArea.getDocument().addDocumentListener(autocomplete);
-                        hasListener = true;
-            }
-        }
-    }
 
     public void actionPerformed(ActionEvent e) {
         // If the source of the event was our "close" option
@@ -512,7 +455,6 @@ public class UI extends JFrame implements ActionListener {
                         textArea.append(scan.nextLine() + "\n");
                     }
 
-                    enableAutoComplete(openFile);
                 } catch (Exception ex) { // catch any exceptions, and...
                     // ...write to the debug console
                     System.err.println(ex.getMessage());
@@ -551,12 +493,7 @@ public class UI extends JFrame implements ActionListener {
         if (e.getSource() == quickFind || e.getSource() == quickButton) {
             new Find(textArea);
         } // About Me
-        else if (e.getSource() == aboutMe || e.getSource() == aboutMeButton) {
-            new About(this).me();
-        } // About Software
-        else if (e.getSource() == aboutSoftware || e.getSource() == aboutButton) {
-            new About(this).software();
-        }
+
     }
 
     class SelectAllAction extends AbstractAction {
@@ -596,7 +533,6 @@ public class UI extends JFrame implements ActionListener {
                 out.write(textArea.getText());
                 out.close();
 
-                enableAutoComplete(openFile);
                 edit = false;
             } catch (Exception ex) { // again, catch any exceptions and...
                 // ...write to the debug console

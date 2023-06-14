@@ -1,35 +1,4 @@
-/**
- * @name        Simple Java NotePad
- * @package     ph.notepad
- * @file        UI.java
- * @author      SORIA Pierre-Henry
- * @email       pierrehs@hotmail.com
- * @link        http://github.com/pH-7
- * @copyright   Copyright Pierre-Henry SORIA, All Rights Reserved.
- * @license     Apache (http://www.apache.org/licenses/LICENSE-2.0)
- * @create      2012-05-04
- * @update      2015-09-4
- *
- *
- * @modifiedby  Achintha Gunasekara
- * @modweb      http://www.achinthagunasekara.com
- * @modemail    contact@achinthagunasekara.com
- *
- * @Modifiedby SidaDan
- * @modemail Fschultz@sinf.de
- * Center this JFrame to the JTextArea
- * Bug fixed. If JTextArea txt not empty and the user will
- * shutdown the Simple Java NotePad, then the Simple Java NotePad
- * is only hidden (still running). We need DISPOSE_ON_CLOSE for
- * this JFrame.
- * Tested with java 8.
- *
- * @Modifiedby SidaDan
- * @modemail Fschultz@sinf.de
- * Removed unsused imports
- */
-
-        package simplejavatexteditor;
+package simplejavatexteditor;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;

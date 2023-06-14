@@ -3,12 +3,12 @@ package simplejavatexteditor;
 import java.util.ArrayList;
 
 /**
- * <h1>A class to store the programming language keywords and
- * provide access to them.</h1>
+ * 存储编程语言关键字和
+ * 提供对它们的访问。
  *
- * <p>Makes multiple language support possible and makes adding new language
- * support convenient. To add more keywords, add a string array and getters
- * to this class. Then, update the switch statement in UI.java.</p>
+ *使多语言支持成为可能，并可以添加新语言
+ *支持方便。要添加更多关键字，请添加字符串数组和 getter
+ * 到这个类。然后，在 UI.java 中更新开关语句。
  */
 public class SupportedKeywords {
 
