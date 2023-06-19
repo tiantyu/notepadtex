@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class SupportedKeywords {
 
-    private String[] supportedLanguages = {".cpp",".java"};
+    private String[] supportedLanguages = {".java"};
 
     private String[] java = {"abstract", "assert", "boolean",
             "break", "byte", "case", "catch", "char", "class", "const",
@@ -46,6 +46,7 @@ public class SupportedKeywords {
     public ArrayList<String> getBrackets() {
         ArrayList<String> al = new ArrayList<>();
         for(String completion : brackets) {
+
             al.add(completion);
         }
         return al;
